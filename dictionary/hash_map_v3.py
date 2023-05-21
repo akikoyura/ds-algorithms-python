@@ -45,6 +45,23 @@ class HashMap:
             head = head.next
         return None
 
+    def delete(self, key):
+        bucket_index = self.get_bucket_key(key)
+        head = self.bucket_array[bucket_index]
+        previous = None
+
+        while head is not None:
+            if head.key == key:
+                if previous is None:
+                    self.bucket_array[bucket_index] = head.next
+                else:
+                    previous.next = head.next
+                self.num_entries -= 1
+                return
+            else:
+                previous = head
+                head = head.next
+
     def get_bucket_key(self, key):
         bucket_index = self.get_hash_code(key)
         return bucket_index
